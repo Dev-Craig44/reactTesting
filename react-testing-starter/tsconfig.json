@@ -5,6 +5,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    // 3.) Get rid of the typescript compiler errors for vitest globals be adding the `types` option `vitest/globals`
     "types": ["vitest/globals"],
 
     /* Bundler mode */
