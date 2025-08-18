@@ -1,4 +1,3 @@
-// 5.) Add this import to make our custom matchers available globally
 import "@testing-library/jest-dom/vitest";
 import ResizeObsever from "resize-observer-polyfill";
 import { server } from "./mocks/server";
