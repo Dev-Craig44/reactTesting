@@ -86,3 +86,19 @@ git rm --cached subfolder_name
 
 
 ```
+
+## Testing Components
+
+2 Major Concerns
+
+- How They Render
+- How They Respond To User Actions
+
+When it comes to react testing we tend to lean towards
+1.) Integration testing
+
+- - slower
+- - More confidence
+- - More Robust
+
+Test the **behavior**. not the `style`
