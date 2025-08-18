@@ -89,16 +89,15 @@ git rm --cached subfolder_name
 
 ## Testing Components
 
-2 Major Concerns
+When testing React components, there are two main concerns:
 
-- How They Render
-- How They Respond To User Actions
+- **How components render**
+- **How they respond to user actions**
 
-When it comes to react testing we tend to lean towards
-1.) Integration testing
+In React testing, we typically focus on **integration testing**:
 
-- - slower
-- - More confidence
-- - More Robust
+- It is slower than unit testing
+- Provides greater confidence in your code
+- Is generally more robust
 
-Test the **behavior**. not the `style`
+The goal is to test the **behavior** of your components, not their `style`.
