@@ -70,3 +70,19 @@ This will start the back-end process at `http://localhost:3000`. If port 3000 is
 **Needed to make git stop tracking the subfolder**
 
 `rm -rf .git`
+
+### 📝 Git Nested Repo Fix
+
+I accidentally cloned a repository into a subfolder of my main project.  
+That subfolder had its own `.git` folder, so when I initialized Git in the root,  
+Git treated the subfolder as a **separate repo (submodule)** instead of tracking its files.
+
+When I later deleted the `.git` inside the subfolder, the files still didn’t show up as changes in the root repo, because Git was only storing a pointer to the submodule.
+
+**Fix:** I ran the following command in the root repo:
+
+```bash
+git rm --cached subfolder_name
+
+
+```
