@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import SearchBox from "../../src/components/SearchBox";
 import userEvent from "@testing-library/user-event";
+import SearchBox from "../../src/components/SearchBox";
 
 describe("SearchBox", () => {
   const renderSearchBox = () => {
