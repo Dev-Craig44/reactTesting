@@ -1,7 +1,7 @@
-import BrowseProducts from "./BrowseProductsPage";
+import TermsAndConditions from "../components/TermsAndConditions";
 
 const PlaygroundPage = () => {
-  return <BrowseProducts />;
+  return <TermsAndConditions />;
 };
 
 export default PlaygroundPage;

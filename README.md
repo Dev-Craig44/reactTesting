@@ -101,3 +101,9 @@ In React testing, we typically focus on **integration testing**:
 - Is generally more robust
 
 The goal is to test the **behavior** of your components, not their `style`.
+
+## Testing User Interactions
+
+- To simulate user interactions we have to use a different libraty called user-event.
+
+- To install this we have to use `npm install --save-dev @testing-library/user-event`
