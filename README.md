@@ -107,3 +107,5 @@ The goal is to test the **behavior** of your components, not their `style`.
 - To simulate user interactions we have to use a different libraty called user-event.
 
 - To install this we have to use `npm install --save-dev @testing-library/user-event`
+
+- Using `qt` & `qtr` to get the screen.getByText()
