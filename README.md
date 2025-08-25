@@ -109,3 +109,5 @@ The goal is to test the **behavior** of your components, not their `style`.
 - To install this we have to use `npm install --save-dev @testing-library/user-event`
 
 - Using `qt` & `qtr` to get the screen.getByText()
+
+### Exercise: Testing Search Box
