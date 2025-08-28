@@ -1,4 +1,5 @@
 import "@testing-library/jest-dom/vitest";
+// 8.) Import ResizeObsever object
 import ResizeObsever from "resize-observer-polyfill";
 import { server } from "./mocks/server";
 
@@ -6,8 +7,10 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
+// 9.) Set global resizer to the ResizeObsever
 global.ResizeObserver = ResizeObsever;
 
+// 21.) Copy and paste the code we found from google in our setup.ts file.
 window.HTMLElement.prototype.scrollIntoView = vi.fn();
 window.HTMLElement.prototype.hasPointerCapture = vi.fn();
 window.HTMLElement.prototype.releasePointerCapture = vi.fn();

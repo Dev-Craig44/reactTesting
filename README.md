@@ -127,3 +127,13 @@ onChange={(value) => console.log(value)}
 // You can just write:
 onChange={console.log}
 ```
+
+## Working with Component Libraries
+
+- Since **jsDOM** (used in test environments) does not provide `ResizeObserver` — which is available in browsers — we need to install a polyfill to avoid errors.
+
+### Install the Polyfill
+
+```bash
+npm i -D resize-observer-polyfill
+```
