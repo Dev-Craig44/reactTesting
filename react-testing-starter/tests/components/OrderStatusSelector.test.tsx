@@ -20,6 +20,7 @@ describe("OrderStatusSelector", () => {
     );
 
     return {
+      // 30.) Create a getOption prop for our test suite. It should take the label as an argument and the name of the option should be the label.
       getOption: (label: RegExp) =>
         screen.findByRole("option", { name: label }),
       // 17.) return a function to grab our options, using the `find`AllByRole method to grab the options because the options pop up asynchronously and store them in [getOptions]
@@ -70,22 +71,29 @@ describe("OrderStatusSelector", () => {
     expect(labels).toEqual(["New", "Processed", "Fulfilled"]);
   });
 
+  // 24.) Create a parameterized test case to select the trigger, selected each options, and verify that it's the correct option value
   it.each([
     { label: /processed/i, value: "processed" },
     { label: /fulfilled/i, value: "fulfilled" },
   ])(
+    // 25.) Make the test name Dynamic by using $value and $label
     "should call onChange with $value when the $label option is selected",
+    // 26.) Get access to our parameterized props by destructuring the argument of this function, [label, value]
     async ({ label, value }) => {
+      // 31.) Import getOption prop into test case
       const { trigger, user, onChange, getOption } = renderComponent();
       await user.click(trigger);
 
+      //  27.) Switch the value of the getOption function to [label]
       const option = await getOption(label);
       await user.click(option);
 
+      // 28.) Switch the hardcoded `processed` to the [value] prop
       expect(onChange).toHaveBeenCalledWith(value);
     }
   );
 
+  // 29.) Create test case for selecting the new option after selecting another option
   it("should call onChange with 'new' when the New option is selected", async () => {
     const { trigger, user, onChange, getOption } = renderComponent();
     await user.click(trigger);
