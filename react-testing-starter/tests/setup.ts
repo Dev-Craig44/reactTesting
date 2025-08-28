@@ -11,7 +11,10 @@ global.ResizeObserver = ResizeObsever;
 window.HTMLElement.prototype.scrollIntoView = vi.fn();
 window.HTMLElement.prototype.hasPointerCapture = vi.fn();
 window.HTMLElement.prototype.releasePointerCapture = vi.fn();
-
+// Our tests our not ran in a browser envirnoment, they are run inside a node environment.
+// We installed jsDOM to simulate a browser environment, now in that environment our window object doesn't have the marchMedia prop, which is a common issue you might face as part of testing react applications.
+// Whenever changing things in the setup.ts file, always restart vitest.
+// 12.) Plug this code in.
 Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: vi.fn().mockImplementation((query: string) => ({
