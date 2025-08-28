@@ -111,3 +111,19 @@ The goal is to test the **behavior** of your components, not their `style`.
 - Using `qt` & `qtr` to get the screen.getByText()
 
 ### Exercise: Testing Search Box
+
+## Passing Functions in React
+
+Sometimes when using callbacks (like `onChange`), you don’t need to wrap the target function in an arrow. If the arrow function simply receives a parameter and immediately forwards it, you can pass the function reference directly.
+
+---
+
+### ✅ Example: Direct Function Reference
+
+```jsx
+// Instead of writing this:
+onChange={(value) => console.log(value)}
+
+// You can just write:
+onChange={console.log}
+```
