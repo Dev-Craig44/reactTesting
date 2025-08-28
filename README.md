@@ -137,3 +137,9 @@ onChange={console.log}
 ```bash
 npm i -D resize-observer-polyfill
 ```
+
+## 🔎 Shortcut: Navigate Symbols in VSCode
+
+- Press **CMD + P** (Mac) or **CTRL + P** (Windows/Linux).
+- Type `@` to see all **symbols** (functions, classes, variables) defined in the current module.
+- This lets you quickly jump to any symbol without scrolling through the file.
