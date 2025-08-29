@@ -143,3 +143,56 @@ npm i -D resize-observer-polyfill
 - Press **CMD + P** (Mac) or **CTRL + P** (Windows/Linux).
 - Type `@` to see all **symbols** (functions, classes, variables) defined in the current module.
 - This lets you quickly jump to any symbol without scrolling through the file.
+
+## SUMMARY:
+
+## 🧪 Testing React Components
+
+When testing React components, there are two main goals:
+
+1. **Rendering** – making sure the component displays correctly.
+2. **Responding to user actions** – ensuring interactions work as expected.
+
+### ✅ Best Practices
+
+- Write tests that are **maintainable, robust, and trustworthy**.
+- Test **behavior** (what the app does), not **implementation details** (how it’s done).
+- **Don’t test styles** — small visual changes can break fragile tests, and passing style tests don’t guarantee good UI.
+- Use **setup files** to configure the testing environment before each test file runs.
+- Use [`@testing-library/user-event`](https://testing-library.com/docs/user-event/intro/) to simulate realistic user interactions.
+
+### 🔍 Query Methods
+
+React Testing Library provides flexible queries for finding elements:
+
+- **getBy** – throws an error if element not found.
+- **queryBy** – returns `null` instead of error if element not found.
+- **findBy** – async, waits for element to appear.
+
+#### Variations
+
+- `ByRole`
+- `ByText`
+- `ByPlaceholderText`
+- `ByTestId`
+
+### 🧰 Useful Matchers
+
+Some helpful Jest matchers for React components:
+
+- `toBeChecked()`
+- `toBeDisabled()`
+- `toBeEmptyDOMElement()`
+- `toBeInTheDocument()`
+- `toHaveAttribute()`
+- `toHaveTextContent()`
+
+### 👩‍💻 Simulating User Interactions
+
+```js
+import userEvent from "@testing-library/user-event";
+
+const user = userEvent.setup();
+await user.click(element);
+await user.type(element, "a");
+```
