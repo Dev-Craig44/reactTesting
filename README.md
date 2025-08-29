@@ -240,3 +240,52 @@ export const handlers = [
   }),
 ];
 ```
+
+## 🛠️ Setting Up Mock Service Worker (MSW)
+
+```ts
+// 1. Install MSW
+// Run this in your terminal:
+// npm i -D msw@latest
+
+// 2. Add tests/mocks/handlers.ts
+import { http, HttpResponse } from "msw";
+
+export const handlers = [
+  http.get("/categories", () => {
+    return HttpResponse.json([
+      { id: 1, name: "Electronics" },
+      { id: 2, name: "Beauty" },
+      { id: 3, name: "Gardening" },
+    ]);
+  }),
+];
+
+// 3. Add tests/mocks/server.ts
+import { setupServer } from "msw/node";
+import { handlers } from "./handlers";
+
+export const server = setupServer(...handlers);
+
+// 4. Configure setupTests.ts
+import { server } from "./mocks/server";
+
+beforeAll(() => server.listen()); // Start server before all tests
+afterEach(() => server.resetHandlers()); // Reset handlers after each test
+afterAll(() => server.close()); // Clean up after all tests
+
+// 5. Verify setup with a test (e.g., main.test.ts)
+test("fetches categories", async () => {
+  const response = await fetch("/categories");
+  const data = await response.json();
+
+  console.log(data); // -> Should log 3 categories
+  expect(data).toHaveLength(3);
+});
+
+// 🔑 Key Takeaways
+// - Don’t mock Axios/Fetch directly → it couples tests to implementation
+// - Centralize mocks in handlers.ts → define responses once
+// - Lifecycle hooks (beforeAll, afterEach, afterAll) keep tests isolated
+// - MSW = realistic, browser-like API mocking without hitting real servers
+```
