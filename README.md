@@ -196,3 +196,47 @@ const user = userEvent.setup();
 await user.click(element);
 await user.type(element, "a");
 ```
+
+# 🌐 Mocking APIs
+
+In this section, we’ll learn how to test components and functions that rely on external APIs — without making real network requests. This makes tests **fast, reliable, and isolated**.
+
+---
+
+## 🎯 You’ll Learn
+
+- **Mock Service Worker (MSW)**  
+  Use MSW to intercept `fetch` or `XHR` requests and return mocked responses in your test environment.
+
+- **Testing Data Fetching**  
+  Verify that components display the correct data when the API call succeeds.
+
+- **Testing Error Handling**  
+  Simulate failed API calls (e.g., `500` server error, network failure) to ensure your UI handles errors gracefully.
+
+- **Testing Loading Indicators**  
+  Check that loading states (like spinners or “Loading…” messages) appear while the request is in progress.
+
+---
+
+## 🧠 Why Mock APIs?
+
+- Keeps tests **deterministic** — no flakiness from real servers.
+- Faster than hitting real endpoints.
+- Lets you simulate **any response**: success, error, empty data, delays, etc.
+- Ensures UI logic is well-tested under different scenarios.
+
+---
+
+## 🚀 Example (with MSW)
+
+```js
+// handlers.js
+import { rest } from "msw";
+
+export const handlers = [
+  rest.get("/api/user", (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json({ id: 1, name: "Craig" }));
+  }),
+];
+```
