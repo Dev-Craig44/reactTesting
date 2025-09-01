@@ -8,7 +8,6 @@ export const handlers = [
 ];
 ProductDetail;
 
-// 1.) Define request handler for products endpoint
 http.get("/products", () => {
   return HttpResponse.json([
     { id: 1, name: "Product 1" },
