@@ -1,10 +1,12 @@
+// 1.) Create the ceremony for Imports (itr)
 import { render, screen } from "@testing-library/react";
 import { delay, http, HttpResponse } from "msw";
 import ProductDetail from "../../src/components/ProductDetail";
+import AllProviders from "../AllProviders";
 import { db } from "../mocks/db";
 import { server } from "../mocks/server";
-import AllProviders from "../AllProviders";
 
+// 2.) Create test suite for ProductDetail
 describe("ProductDetail", () => {
   let productId: number;
 
@@ -17,16 +19,21 @@ describe("ProductDetail", () => {
     db.product.delete({ where: { id: { equals: productId } } });
   });
 
+  // 3.) Write test case for products rendering correctly
   it("should render the product details", async () => {
     const product = db.product.findFirst({
       where: { id: { equals: productId } },
     });
 
+    // 4.) Render the ProductDetail component and give the productId prop the Id of `1`
     render(<ProductDetail productId={productId} />, { wrapper: AllProviders });
 
+    // 5.) Verify the text in the element is "/product 1/i" is in the doc, and make the test case async
     expect(
       await screen.findByText(new RegExp(product!.name))
     ).toBeInTheDocument();
+    // 6.) Verify that the price is $10. Make sure to `\` the special character in the RegExp.
+    // (|$10)
     expect(
       await screen.findByText(new RegExp(product!.price.toString()))
     ).toBeInTheDocument();
