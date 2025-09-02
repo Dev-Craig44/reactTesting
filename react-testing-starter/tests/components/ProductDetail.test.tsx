@@ -28,12 +28,11 @@ describe("ProductDetail", () => {
     // 4.) Render the ProductDetail component and give the productId prop the Id of `1`
     render(<ProductDetail productId={productId} />, { wrapper: AllProviders });
 
-    // 5.) Verify the text in the element is "/product 1/i" is in the doc, and make the test case async
+    // 5.) Verify the text in the element by giving the matcher a RegExp so we don't give it an exact string. (new RegExp(products[0].name))
     expect(
       await screen.findByText(new RegExp(product!.name))
     ).toBeInTheDocument();
-    // 6.) Verify that the price is $10. Make sure to `\` the special character in the RegExp.
-    // (|$10)
+    // 6.) Verify that the price is $10. Do same by changing the hard codied values w/ a new RegExp(products[0].price.toString()). We're toString() because products[0].price comes out as a number
     expect(
       await screen.findByText(new RegExp(product!.price.toString()))
     ).toBeInTheDocument();
