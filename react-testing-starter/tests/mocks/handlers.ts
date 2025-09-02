@@ -24,5 +24,11 @@ http.get("/products/:id", ({ params }) => {
   // 5.) Write the logic to look up our product
   // 6.) Because the [id] variable is a string, turn it into a number by using parseInt
 
-  products.find((p) => p.id === parseInt(id));
+  // 9.) Switch the parseInt with just the [id] variable and store the value in [product]
+  const product = products.find((p) => p.id === id);
+
+  // 10.) Make condition if there is no product
+  if (!product) return new HttpResponse(null, { status: 404 });
+  // 11.) If we have a product lets just return it
+  return HttpResponse.json(product);
 });
