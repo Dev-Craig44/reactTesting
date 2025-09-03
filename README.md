@@ -289,3 +289,52 @@ test("fetches categories", async () => {
 // - Lifecycle hooks (beforeAll, afterEach, afterAll) keep tests isolated
 // - MSW = realistic, browser-like API mocking without hitting real servers
 ```
+
+## 🎲 Generating Fake Data with Faker.js
+
+[**Faker.js Documentation →**](https://fakerjs.dev)
+
+Hardcoding test data isn’t scalable. **Faker.js** helps generate fake but realistic values for testing and development.
+
+### 📦 Installation
+
+$ npm i -D @faker-js/faker
+
+### 🔌 Import
+
+import { faker } from "@faker-js/faker";
+
+### 🛍️ Example: Fake Product
+
+const product = {
+name: faker.commerce.productName(),
+price: faker.commerce.price({ min: 1, max: 100 }), // returns string
+};
+console.log(product);
+
+// ✅ Sample output
+// { "name": "Fantastic Plastic Tuna", "price": "72.00" }
+
+// ⚠️ Note: `price` is returned as a string, not a number. Use Number() if needed.
+
+### 🌐 Faker Modules
+
+- airline → flight-related data
+- internet → domains, emails, emojis
+- animal → animals
+- location → countries, cities, latitude/longitude
+- color → colors
+- commerce → products, prices
+
+### 🧠 Why Use Faker?
+
+- Avoids hard-coded fixtures → more maintainable tests
+- Generates realistic, randomized inputs → better coverage
+- Great for mock APIs, seed scripts, and UI testing
+
+### 🔑 Key Takeaways
+
+- Faker makes tests cleaner and scalable
+- Seed Faker for deterministic results:
+  faker.seed(123);
+- Use alongside MSW or other mocks for end-to-end fake data flows
