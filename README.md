@@ -338,3 +338,45 @@ console.log(product);
 - Seed Faker for deterministic results:
   faker.seed(123);
 - Use alongside MSW or other mocks for end-to-end fake data flows
+
+## 🗄️ Mock Service Worker Data (MSW Data)
+
+MSW has a companion library called **@mswjs/data**. It provides an in-memory database with a simple interface to **model data and query it** — similar to how you’d interact with a real database. Used properly, it simplifies tests; used poorly, it can create global state issues.
+
+---
+
+### 📦 Installation
+
+$ npm i -D @mswjs/data@0.16.1
+
+---
+
+### 🏗️ Setting Up a Database
+
+Create `tests/mocks/db.ts`:
+
+# 🏷️ How to Properly Tag a Commit in This Repo
+
+This repository is dedicated to **Testing React Apps with React Testing Library**. To keep track of progress by section, use **annotated Git tags** with a consistent naming convention.
+
+## Tagging Convention
+
+- **Prefix all tags with:** `tra-` (short for Testing React Apps)
+- **Number each section in order:** `01`, `02`, `03`, …
+- **Use kebab-case for section names**
+
+**Examples:**
+
+- `tra-01-testing-react-components`
+- `tra-02-mocking-apis`
+- `tra-03-error-handling`
+
+## How to Tag a Commit
+
+1. **Create an annotated tag with a descriptive message:**
+
+   ```sh
+   git tag -a tra-01-testing-react-components -m "Completed Section 1: Testing React Components"
+
+   git push origin tra-01-testing-react-components
+   ```
