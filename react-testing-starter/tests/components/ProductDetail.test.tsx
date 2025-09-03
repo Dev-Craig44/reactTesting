@@ -1,5 +1,6 @@
 // 1.) Create the ceremony for Imports (itr)
 import { render, screen } from "@testing-library/react";
+// 8.) Import http & HttpResponse
 import { delay, http, HttpResponse } from "msw";
 import ProductDetail from "../../src/components/ProductDetail";
 import AllProviders from "../AllProviders";
@@ -37,21 +38,32 @@ describe("ProductDetail", () => {
       await screen.findByText(new RegExp(product!.price.toString()))
     ).toBeInTheDocument();
   });
-
+  // 7.) Write test for message if product isn't found
   it("should render message if product not found", async () => {
+    // We need to overwrite the handler for fetching a particular product #8
+    // 9.) Create a request handler that returns null
     server.use(http.get("/products/:id", () => HttpResponse.json(null)));
 
+    // 10.) Render the component again w/ productId prop set to `1`
     render(<ProductDetail productId={1} />, { wrapper: AllProviders });
 
+    // 11.) Declare a [message] variable using the findByText method because the message will pop up asynchronuosly.
     const message = await screen.findByText(/not found/i);
+    // 12.) Verify this [message] is in the doc
     expect(message).toBeInTheDocument();
   });
 
+  // 13.) Duplicate last test case in case productId is 0
   it("should render an error for invalid productId", async () => {
-    server.use(http.get("/products/:id", () => HttpResponse.json([])));
+    // We don't need to mock a database response so we can get rid of this server response
 
+    // 14.) Render the ProductDetail component with productId of 0
     render(<ProductDetail productId={0} />, { wrapper: AllProviders });
+
+    // 15.) Since the invalid message will come up asynchronuosly use the find text method to delcare the [message] variable
     const message = await screen.findByText(/invalid/i);
+
+    // 16.) Verify that this message is in the doc
     expect(message).toBeInTheDocument();
   });
 
