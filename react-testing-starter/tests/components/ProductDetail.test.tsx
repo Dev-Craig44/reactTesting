@@ -47,11 +47,15 @@ describe("ProductDetail", () => {
     expect(message).toBeInTheDocument();
   });
 
+  // 1.) Create test for there is nothing found
   it("should render an error if data fetching fails", async () => {
+    // 2.) Copy the server response and change the response to error()
     server.use(http.get("/products/:id", () => HttpResponse.error()));
 
+    // 3.) Render our component
     render(<ProductDetail productId={productId} />, { wrapper: AllProviders });
 
+    // 4.) Use the findByText method to verify that the word `error` is in the document
     expect(await screen.findByText(/error/i)).toBeInTheDocument();
   });
 
