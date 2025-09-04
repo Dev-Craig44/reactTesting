@@ -10,17 +10,23 @@ import { db } from "../mocks/db";
 import { server } from "../mocks/server";
 
 describe("ProductList", () => {
+  // 11.) To keep track of the products that we created. Create a number[] called productIds and initialize it to an empty array
   const productIds: number[] = [];
 
+  // 8.) Create the database before running our tests
   beforeAll(() => {
+    // 9.) Create an array with 3 elements using our database
     [1, 2, 3].forEach(() => {
       const product = db.product.create();
+      // 12.) Every time we create a product, Push the ID to the productIds array.
       productIds.push(product.id);
     });
   });
 
+  // 10.) Create the clean for after our tests are ran
   afterAll(() => {
     console.log("afterAll called...");
+    // 13.) Use deleteMany, and pass [where], [id], [in], with the productIds array.
     db.product.deleteMany({ where: { id: { in: productIds } } });
   });
 
