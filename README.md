@@ -380,3 +380,11 @@ This repository is dedicated to **Testing React Apps with React Testing Library*
 
    git push origin tra-01-testing-react-components
    ```
+
+## Refactoring: Using React Query
+
+- React Query
+- A state-management library for React apps
+- Caching
+- Background updates
+- Automatic retries
