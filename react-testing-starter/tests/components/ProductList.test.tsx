@@ -3,6 +3,7 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
+// 7.) Import the delay method from mock service worker
 import { delay, http, HttpResponse } from "msw";
 import ProductList from "../../src/components/ProductList";
 import AllProviders from "../AllProviders";
@@ -52,30 +53,43 @@ describe("ProductList", () => {
     expect(await screen.findByText(/error/i)).toBeInTheDocument();
   });
 
+  // 5.) Write test case for the loading message when fetching data
   it("should render a loading indicator when fetching data", async () => {
+    // 6.) Call our server object, but instead of just creating a sever response, we will create a delay
     server.use(
       http.get("/products", async () => {
+        // 8.) Call the delay method
         await delay();
+        // 9.) Give the response an empty array because we are really not testing the response right now
         return HttpResponse.json([]);
       })
     );
 
+    // 10.) Render our component
     render(<ProductList />, { wrapper: AllProviders });
 
+    // 11.) Use findByText to match the `loading` word and verify that it is in the document, and make sure that this test case is async.
     expect(await screen.findByText(/loading/i)).toBeInTheDocument();
   });
 
+  // 12.) Create test case for when data fetching is over, the loading indicator should be gone
   it("should remove the loading indicator after data is fetch", async () => {
+    // 13.) Render ProductList component
     render(<ProductList />, { wrapper: AllProviders });
 
+    // 14.) Use new react testing element to wait for the loading element to be removed. This returns a promise so await and make test case async.
     await waitForElementToBeRemoved(() => screen.queryByText(/loading/i));
   });
 
+  // 15.) Duplicate last test case for loading indicator to be removed if the data fetching fails.
   it("should remove the loading indicator if data fetching fails", async () => {
+    // 16.) Send a server response of an error
     server.use(http.get("/products", () => HttpResponse.error()));
 
+    // 17.) Render the component
     render(<ProductList />, { wrapper: AllProviders });
 
+    // 18.) Use the react testing element to make sure the loading element is removed
     await waitForElementToBeRemoved(() => screen.queryByText(/loading/i));
   });
 });
