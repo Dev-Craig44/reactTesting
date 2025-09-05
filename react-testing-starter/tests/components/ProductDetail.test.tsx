@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+// 7.) Import the delay method
 import { delay, http, HttpResponse } from "msw";
 import ProductDetail from "../../src/components/ProductDetail";
 import AllProviders from "../AllProviders";
@@ -59,16 +60,22 @@ describe("ProductDetail", () => {
     expect(await screen.findByText(/error/i)).toBeInTheDocument();
   });
 
+  // 5.) Create test case for loading indicator rendering when fetching data
   it("should render a loading indicator when fetching data", async () => {
+    // 6.) Create a server response to the product endpoint
     server.use(
       http.get("/products/1", async () => {
+        // 8.) Use the delay method to create a delay
         await delay(100);
+        // 9.) Give an empty array as the response because we just care about the loading element, not the response.
         return HttpResponse.json([]);
       })
     );
 
+    // 10.) Render the ProductDetail component
     render(<ProductDetail productId={productId} />, { wrapper: AllProviders });
 
+    // 11.) Use the screen.findByText method to match the loading word and verify it is in the document.
     expect(await screen.findByText(/loading/i)).toBeInTheDocument();
   });
 });
