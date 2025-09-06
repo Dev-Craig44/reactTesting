@@ -26,6 +26,7 @@ describe("ProductList", () => {
   });
 
   it("should render the list of products", async () => {
+    // 7.) Now use the wrapper augment to wrap the ProductList in our component
     render(<ProductList />, { wrapper: AllProviders });
 
     const items = await screen.findAllByRole("listitem");

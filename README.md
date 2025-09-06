@@ -388,3 +388,7 @@ This repository is dedicated to **Testing React Apps with React Testing Library*
 - Caching
 - Background updates
 - Automatic retries
+
+## Wrapping Components for Testing
+
+Create `tests/AllProviders.tsx`:
