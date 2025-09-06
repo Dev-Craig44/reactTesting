@@ -22,6 +22,8 @@ describe("ProductDetail", () => {
     const product = db.product.findFirst({
       where: { id: { equals: productId } },
     });
+
+    // 8.) Wrap this component in the AllProviders component
     render(<ProductDetail productId={productId} />, { wrapper: AllProviders });
 
     expect(
@@ -34,6 +36,7 @@ describe("ProductDetail", () => {
   it("should render message if product not found", async () => {
     server.use(http.get("/products/:id", () => HttpResponse.json(null)));
 
+    // 9.) Wrap this component in the AllProviders component
     render(<ProductDetail productId={1} />, { wrapper: AllProviders });
 
     const message = await screen.findByText(/not found/i);
@@ -41,6 +44,7 @@ describe("ProductDetail", () => {
   });
 
   it("should render an error for invalid productId", async () => {
+    // 10.) Wrap this component in the AllProviders component
     render(<ProductDetail productId={0} />, { wrapper: AllProviders });
 
     const message = await screen.findByText(/invalid/i);
@@ -54,6 +58,7 @@ describe("ProductDetail", () => {
     server.use(http.get("/products/:id", () => HttpResponse.error()));
 
     // 3.) Render our component
+    // 11.) Wrap this component in the AllProviders component
     render(<ProductDetail productId={productId} />, { wrapper: AllProviders });
 
     // 4.) Use the findByText method to verify that the word `error` is in the document
@@ -73,6 +78,7 @@ describe("ProductDetail", () => {
     );
 
     // 10.) Render the ProductDetail component
+    // 12.) Wrap this component in the AllProviders component
     render(<ProductDetail productId={productId} />, { wrapper: AllProviders });
 
     // 11.) Use the screen.findByText method to match the loading word and verify it is in the document.
