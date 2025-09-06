@@ -7,7 +7,6 @@ import ReactQueryProvider from "./ReactQueryProvider";
 import ReduxProvider from "./ReduxProvider";
 import { LanguageProvider } from "./language/LanguageProvider";
 
-// 2.) This is where we keep all of our providers
 const Providers = ({ children }: PropsWithChildren) => {
   return (
     <AuthProvider>
