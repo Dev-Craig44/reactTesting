@@ -392,3 +392,21 @@ This repository is dedicated to **Testing React Apps with React Testing Library*
 ## Wrapping Components for Testing
 
 Create `tests/AllProviders.tsx`:
+
+## 📝 Using `it.todo` in Tests
+
+In Jest/Vitest, `it.todo` is a way to mark a test as **planned but not yet implemented**.  
+Think of it like a sticky note in your code — it’s a placeholder that reminds you what needs to be tested later.
+
+### ✅ Example
+
+```ts
+describe("User login", () => {
+  it("should allow login with valid credentials", () => {
+    // test code here
+  });
+
+  it.todo("should reject login with an invalid password");
+  it.todo("should lock account after 3 failed attempts");
+});
+```
