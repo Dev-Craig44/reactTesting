@@ -410,3 +410,45 @@ describe("User login", () => {
   it.todo("should lock account after 3 failed attempts");
 });
 ```
+
+## 🐞 Debugging: `getItem is not a function`
+
+While testing the **BrowserProductsPage** component, the following error appeared:
+
+---
+
+### 🔎 Investigation
+
+1. **Search the codebase**  
+   Use the shortcut **Shift + CMD + F** to search for `getItem`.  
+   This shows that `getItem` is provided as a **prop** from the `useCart` hook.
+
+2. **Trace the context**
+
+   - In `QuantitySelector`, `getItem` is expected to come from the cart context.
+   - By checking `App.tsx`, we see that the component tree includes a **CartProvider**.
+   - The `CartProvider` supplies `getItem` to any children using `useCart`.
+
+3. **Root cause**  
+   The error occurred because the test (or component usage) did **not wrap** `BrowserProductsPage` in the `CartProvider`.  
+   Without the provider, `useCart` returns an undefined context, so `getItem` isn’t available.
+
+---
+
+### 🛠️ Fix
+
+Wrap your component (or test render) with the **CartProvider**:
+
+```tsx
+import { render } from "@testing-library/react";
+import { CartProvider } from "../cart/CartProvider";
+import QuantitySelector from "./QuantitySelector";
+
+const renderComponent = () => {
+  render(
+    <CartProvider>
+      <BrowserProductsPage />
+    </CartProvider>
+  );
+};
+```
