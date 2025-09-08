@@ -1,6 +1,6 @@
-import { http, HttpResponse, delay } from "msw";
+import { delay, http, HttpResponse } from "msw";
 import { server } from "./mocks/server";
-
+// 3.) Create a helper function for delay to a specific endpoint
 export const simulateDelay = (endpoint: string) => {
   server.use(
     http.get(endpoint, async () => {

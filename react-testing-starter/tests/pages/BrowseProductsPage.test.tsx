@@ -57,9 +57,8 @@ describe("BrowseProductsPage", () => {
 
     const { getProductsSkeleton } = renderComponent();
 
+    // 2.) Pass our helper function here, but call it because we need an element in the expect function.
     expect(getProductsSkeleton()).toBeInTheDocument();
-
-    screen.debug();
   });
 
   it("should hide the loading skeleton after products are fetched", async () => {
@@ -142,6 +141,9 @@ const renderComponent = () => {
   const getCategorySkeleton = () =>
     screen.queryByRole("progressbar", { name: /categories/i });
 
+  // 1.) Create a helper function `getProductsSkeleton` and resuse this anywhere we need it
+  //     This queries for the <div> we wrapped with role="progressbar"
+  //     (labeled with "products") to represent the loading skeleton.
   const getProductsSkeleton = () =>
     screen.queryByRole("progressbar", { name: /products/i });
 
