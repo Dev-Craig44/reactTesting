@@ -1,3 +1,4 @@
+// 1.) Import ceremony `itr`
 import {
   render,
   screen,
@@ -12,9 +13,8 @@ import { simulateDelay, simulateError } from "../Utils";
 
 //RENDERING TESTS
 
+// 2.) Create test suite for BrowseProductsPage
 describe("BrowseProductsPage", () => {
-  //when fetching data we should have a loading skeleton
-
   const categories: Category[] = [];
   const products: Product[] = [];
 
@@ -58,6 +58,8 @@ describe("BrowseProductsPage", () => {
     const { getProductsSkeleton } = renderComponent();
 
     expect(getProductsSkeleton()).toBeInTheDocument();
+
+    screen.debug();
   });
 
   it("should hide the loading skeleton after products are fetched", async () => {
