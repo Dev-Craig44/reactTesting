@@ -20,10 +20,17 @@ describe("BrowseProductsPage", () => {
 
   beforeAll(() => {
     [1, 2].forEach(() => {
+      // 5.) Store the created category in a `category` variable
       const category = db.category.create();
       categories.push(category);
+      // 7.) Make atleast to products for each category
       [1, 2].forEach(() => {
-        products.push(db.product.create({ categoryId: category.id }));
+        products.push(
+          db.product.create({
+            // 6.) Set `categoryId` to [category.id]
+            categoryId: category.id,
+          })
+        );
       });
     });
   });
@@ -31,11 +38,11 @@ describe("BrowseProductsPage", () => {
   afterAll(() => {
     const categoryIds = categories.map((c) => c.id);
     db.category.deleteMany({ where: { id: { in: categoryIds } } });
-  });
 
-  const productIds = products.map((p) => p.id);
-  db.product.deleteMany({
-    where: { id: { in: productIds } },
+    const productIds = products.map((p) => p.id);
+    db.product.deleteMany({
+      where: { id: { in: productIds } },
+    });
   });
 
   it("should show a loading skeleton when fetching categories", () => {
@@ -111,10 +118,13 @@ describe("BrowseProductsPage", () => {
     });
   });
 
+  // 1.) Create a test case for filtered
   it("should filter products by category", async () => {
+    // 2.) Call the renderComponent and grab our helper props we made
     const { selectCategory, expectProductsToBeInTheDocument } =
       renderComponent();
 
+    // 8.) Declare `selectedCategory` from the first element in the categories.
     const selectedCategory = categories[0];
     await selectCategory(selectedCategory.name);
 
@@ -122,6 +132,7 @@ describe("BrowseProductsPage", () => {
     expectProductsToBeInTheDocument(products);
   });
 
+  // 12.) Duplicate test case to verify all prducts are there if all is selected
   it("should render all products if All category is selected", async () => {
     const { selectCategory, expectProductsToBeInTheDocument } =
       renderComponent();
@@ -141,9 +152,6 @@ const renderComponent = () => {
   const getCategorySkeleton = () =>
     screen.queryByRole("progressbar", { name: /categories/i });
 
-  // 1.) Create a helper function `getProductsSkeleton` and resuse this anywhere we need it
-  //     This queries for the <div> we wrapped with role="progressbar"
-  //     (labeled with "products") to represent the loading skeleton.
   const getProductsSkeleton = () =>
     screen.queryByRole("progressbar", { name: /products/i });
 
@@ -159,9 +167,12 @@ const renderComponent = () => {
 
   const expectProductsToBeInTheDocument = (products: Product[]) => {
     const rows = screen.getAllByRole("row");
+    // 9.) Slice out the first row (the header) so it’s excluded from the data rows
     const dataRows = rows.slice(1);
+    // 10.) Verify that the data rows have the right amount of rows
     expect(dataRows).toHaveLength(products.length);
 
+    // 11.) Verify that our products are in the document
     products.forEach((product) => {
       expect(screen.getByText(product.name)).toBeInTheDocument();
     });

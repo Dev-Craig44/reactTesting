@@ -6,6 +6,7 @@ export const db = factory({
   category: {
     id: primaryKey(faker.number.int),
     name: faker.commerce.department,
+    // 4.) Associate this category with multiple products
     products: manyOf("product"),
   },
   product: {
@@ -13,6 +14,7 @@ export const db = factory({
     name: faker.commerce.productName,
     price: () => faker.number.int({ min: 1, max: 100 }),
     categoryId: faker.number.int,
+    // 3.) Create a relationship by linking this product to one category
     category: oneOf("category"),
   },
 });
