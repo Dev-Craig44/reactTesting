@@ -1,4 +1,3 @@
-// 1.) Import ceremony `itr`
 import {
   render,
   screen,
@@ -11,23 +10,17 @@ import AllProviders from "../AllProviders";
 import { db, getProductsByCategory } from "../mocks/db";
 import { simulateDelay, simulateError } from "../Utils";
 
-//RENDERING TESTS
-
-// 2.) Create test suite for BrowseProductsPage
 describe("BrowseProductsPage", () => {
   const categories: Category[] = [];
   const products: Product[] = [];
 
   beforeAll(() => {
     [1, 2].forEach(() => {
-      // 5.) Store the created category in a `category` variable
       const category = db.category.create();
       categories.push(category);
-      // 7.) Make atleast to products for each category
       [1, 2].forEach(() => {
         products.push(
           db.product.create({
-            // 6.) Set `categoryId` to [category.id]
             categoryId: category.id,
           })
         );
@@ -64,7 +57,6 @@ describe("BrowseProductsPage", () => {
 
     const { getProductsSkeleton } = renderComponent();
 
-    // 2.) Pass our helper function here, but call it because we need an element in the expect function.
     expect(getProductsSkeleton()).toBeInTheDocument();
   });
 
@@ -118,13 +110,10 @@ describe("BrowseProductsPage", () => {
     });
   });
 
-  // 1.) Create a test case for filtered
   it("should filter products by category", async () => {
-    // 2.) Call the renderComponent and grab our helper props we made
     const { selectCategory, expectProductsToBeInTheDocument } =
       renderComponent();
 
-    // 8.) Declare `selectedCategory` from the first element in the categories.
     const selectedCategory = categories[0];
     await selectCategory(selectedCategory.name);
 
@@ -132,7 +121,6 @@ describe("BrowseProductsPage", () => {
     expectProductsToBeInTheDocument(products);
   });
 
-  // 12.) Duplicate test case to verify all prducts are there if all is selected
   it("should render all products if All category is selected", async () => {
     const { selectCategory, expectProductsToBeInTheDocument } =
       renderComponent();
@@ -167,12 +155,9 @@ const renderComponent = () => {
 
   const expectProductsToBeInTheDocument = (products: Product[]) => {
     const rows = screen.getAllByRole("row");
-    // 9.) Slice out the first row (the header) so it’s excluded from the data rows
     const dataRows = rows.slice(1);
-    // 10.) Verify that the data rows have the right amount of rows
     expect(dataRows).toHaveLength(products.length);
 
-    // 11.) Verify that our products are in the document
     products.forEach((product) => {
       expect(screen.getByText(product.name)).toBeInTheDocument();
     });
