@@ -523,3 +523,31 @@ You’ll now see a detailed report showing which lines, branches, and functions 
 
 - **Code Coverage Before Refactoring**  
   Always run coverage before refactoring production code to ensure all logic is covered by tests. This provides a safety net and reduces the chance of regressions.
+
+## ✅ What To Test
+
+When writing tests for forms and interactive components, focus on two main areas: **Rendering** and **User Actions**.
+
+---
+
+### 1️⃣ Rendering
+
+- **Correct input fields** — Ensure the right fields are present (text inputs, checkboxes, selects, etc.).
+- **Default values** — Verify that fields have the expected initial state.
+- **Initial data** — Confirm that preloaded data (e.g., editing an existing form) is displayed correctly.
+- **Dropdown options** — Check that the correct options are available in select menus.
+
+---
+
+### 2️⃣ User Actions
+
+- **Field interactions** — Example: toggling a checkbox disables/enables a related button.
+- **Validation rules** — Catch edge cases such as:
+  - Out-of-range numbers
+  - Extremely long strings
+  - Special characters
+- **Form submission** — Ensure that submitting the form sends the correct information.
+- **Form feedback & UX** — Test the user experience:
+  - Submit button disables during submission
+  - Loading spinner appears
+  - Toast/notification message confirms success
