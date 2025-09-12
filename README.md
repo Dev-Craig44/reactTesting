@@ -466,3 +466,30 @@ In VS Code (and most modern editors), you can quickly move your cursor back to w
   <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>-</kbd> (Mac)
 
 This is super handy when you’re jumping between definitions, test files, or large components and want to return to where you were editing.
+
+## 📊 Code Coverage
+
+Code coverage helps you measure how much of your code is exercised by your test suite.  
+With **Vitest**, you can add a coverage script to your `package.json`.
+
+---
+
+### 📝 Add Coverage Script
+
+```json
+"scripts": {
+  "coverage": "vitest run --coverage"
+}
+```
+
+## 🔍 Viewing the Coverage Report
+
+Follow these steps to open the report:
+
+1. Go to the `coverage/` folder in your project.
+2. Highlight the `index.html` file.
+3. Press **Ctrl + Cmd + R** (Mac) to reveal the file in Finder.
+   - On **Windows/Linux**: right-click `index.html` → **Show in Explorer/File Manager**.
+4. Drag and drop `index.html` into your browser window.
+
+You’ll now see a detailed report showing which lines, branches, and functions are covered by your tests.
