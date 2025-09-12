@@ -493,3 +493,33 @@ Follow these steps to open the report:
 4. Drag and drop `index.html` into your browser window.
 
 You’ll now see a detailed report showing which lines, branches, and functions are covered by your tests.
+
+## 📚 Mocking APIs — Summary
+
+**The Complete React Testing Course**  
+© 2024 Code with Mosh (codewithmosh.com)
+
+---
+
+- **Mock Service Worker (MSW)**  
+  A library that intercepts HTTP requests made by your application, allowing you to mock server responses for testing purposes.
+
+- **@mswjs/data**  
+  A companion library for MSW that provides an in-memory database. It lets you model entities, create relationships, and generate handlers automatically for REST or GraphQL APIs.
+
+- **Faker (@faker-js/faker)**  
+  A library for generating fake (but realistic) data, such as product names, prices, emails, and more. Useful for seeding mocks and creating test data.
+
+- **React Query**  
+  A library for managing server state in React applications. It offers powerful features out of the box:
+
+  - Caching
+  - Automatic retries
+  - Automatic syncing
+  - Background refetching
+
+- **Reusable Utilities**  
+  Extract common test utilities (e.g., rendering, simulating API errors, delays). This makes test code more concise and easier to understand.
+
+- **Code Coverage Before Refactoring**  
+  Always run coverage before refactoring production code to ensure all logic is covered by tests. This provides a safety net and reduces the chance of regressions.
