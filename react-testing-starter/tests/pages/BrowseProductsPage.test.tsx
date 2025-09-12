@@ -111,19 +111,14 @@ describe("BrowseProductsPage", () => {
   });
 
   it("should filter products by category", async () => {
-    // 5.) Add our function we create selectCategory
-    // 12.) Grab our new verified function
     const { selectCategory, expectProductsToBeInTheDocument } =
       renderComponent();
 
     const selectedCategory = categories[0];
-    // 6.) Use it here and use the name prop.
     await selectCategory(selectedCategory.name);
 
-    // 9.) Now call the function we just moved and give it the Selected Category Id
     const products = getProductsByCategory(selectedCategory.id);
 
-    // 13.) Place the verify function here and give it our [products] variable
     expectProductsToBeInTheDocument(products);
   });
 
@@ -143,18 +138,14 @@ const renderComponent = () => {
 
   const user = userEvent.setup();
 
-  // 2.) Move this function outside of the selectCategory function so the function can use it.
   const getCategorySkeleton = () =>
     screen.queryByRole("progressbar", { name: /categories/i });
 
-  // 3.) Do the same with function, to use in selectCategory
   const getProductsSkeleton = () =>
     screen.queryByRole("progressbar", { name: /products/i });
 
   const combobox = () => screen.queryByRole("combobox");
 
-  // 1.) Create helper function by copy & pasting from the implementation from our test case, make it dynamic by letting us pass through a RegExp as the label for the option.
-  // 7.) Annotate the name prop's type to a RegExp or a string so that there is no type error.
   const selectCategory = async (name: RegExp | string) => {
     await waitForElementToBeRemoved(getCategorySkeleton);
     await user.click(combobox()!);
@@ -163,7 +154,6 @@ const renderComponent = () => {
     await user.click(option);
   };
 
-  // 10.) Create the helper function that will verify products to be in the doc. We just nee to give it products.
   const expectProductsToBeInTheDocument = (products: Product[]) => {
     const rows = screen.getAllByRole("row");
     const dataRows = rows.slice(1);
@@ -175,13 +165,11 @@ const renderComponent = () => {
   };
 
   return {
-    // 4.) Now we can add these functions in the object we returnj
     selectCategory,
     getProductsSkeleton,
     getCategorySkeleton,
     combobox,
     user,
-    // 11.) Insert our new helper function to be rendered
     expectProductsToBeInTheDocument,
   };
 };
