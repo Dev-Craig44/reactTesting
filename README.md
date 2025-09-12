@@ -452,3 +452,17 @@ const renderComponent = () => {
   );
 };
 ```
+
+## ⏪ How to Jump Back and Forth in Your Code (Cursor History)
+
+In VS Code (and most modern editors), you can quickly move your cursor back to where it was before — almost like “undo/redo” for navigation.
+
+- **Jump Backward**:  
+  <kbd>Ctrl</kbd> + <kbd>-</kbd> (Windows/Linux)  
+  <kbd>Cmd</kbd> + <kbd>-</kbd> (Mac)
+
+- **Jump Forward**:  
+  <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>-</kbd> (Windows/Linux)  
+  <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>-</kbd> (Mac)
+
+This is super handy when you’re jumping between definitions, test files, or large components and want to return to where you were editing.
