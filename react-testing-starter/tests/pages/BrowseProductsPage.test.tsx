@@ -111,10 +111,12 @@ describe("BrowseProductsPage", () => {
   });
 
   it("should filter products by category", async () => {
+    // 5.) Add our function we create selectCategory
     const { selectCategory, expectProductsToBeInTheDocument } =
       renderComponent();
 
     const selectedCategory = categories[0];
+    // 6.) Use it here and use the name prop.
     await selectCategory(selectedCategory.name);
 
     const products = getProductsByCategory(selectedCategory.id);
@@ -137,14 +139,17 @@ const renderComponent = () => {
 
   const user = userEvent.setup();
 
+  // 2.) Move this function outside of the selectCategory function so the function can use it.
   const getCategorySkeleton = () =>
     screen.queryByRole("progressbar", { name: /categories/i });
 
+  // 3.) Do the same with function, to use in selectCategory
   const getProductsSkeleton = () =>
     screen.queryByRole("progressbar", { name: /products/i });
 
   const combobox = () => screen.queryByRole("combobox");
 
+  // 1.) Create helper function by copy & pasting from the implementation from our test case, make it dynamic by letting us pass through a RegExp as the label for the option.
   const selectCategory = async (name: RegExp | string) => {
     await waitForElementToBeRemoved(getCategorySkeleton);
     await user.click(combobox()!);
@@ -164,6 +169,7 @@ const renderComponent = () => {
   };
 
   return {
+    // 4.) Now we can add these functions in the object we returnj
     selectCategory,
     getProductsSkeleton,
     getCategorySkeleton,
