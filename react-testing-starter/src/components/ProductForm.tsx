@@ -48,8 +48,18 @@ const ProductForm = ({ product, onSubmit }: Props) => {
       className="space-y-3"
     >
       <Box>
+        {/* → Error: Unable to find role="textbox" with name `/name/i` in test */}
+        {/* 9.) Add a label with `htmlFor="name"` so the input can be selected by its accessible name */}
+        <label htmlFor="name">Name</label>
+
         <TextField.Root className="max-w-sm">
-          <TextField.Input placeholder="Name" {...register("name")} size="3" />
+          {/* 10.) Add `id="name"` to the input so it associates correctly with the label */}
+          <TextField.Input
+            id="name"
+            placeholder="Name"
+            {...register("name")}
+            size="3"
+          />
         </TextField.Root>
         <ErrorMessage error={errors.name} />
       </Box>
