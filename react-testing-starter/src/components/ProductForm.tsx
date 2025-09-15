@@ -52,13 +52,8 @@ const ProductForm = ({ product, onSubmit }: Props) => {
         {/* 9.) Remove this label*/}
 
         <TextField.Root className="max-w-sm">
-          {/* 10.) Remove this id attribute and add the aria label attribute and set it to [name] */}
-          <TextField.Input
-            aria-label="name"
-            placeholder="Name"
-            {...register("name")}
-            size="3"
-          />
+          {/* 10.) Remove the aria-label because we are going to look this element by placeholder */}
+          <TextField.Input placeholder="Name" {...register("name")} size="3" />
         </TextField.Root>
         <ErrorMessage error={errors.name} />
       </Box>

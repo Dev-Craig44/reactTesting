@@ -16,9 +16,10 @@ describe("ProductForm", () => {
 
     // 6.) Verify that the name text is in the field
     // 8.) TestingLibraryElementError: Unable to find an accessible element with the role "textbox" and name `/name/i`
-    // 8.) Change getByRole to findByRole, await it, and change the test to async. We got the error because we start off with the loading indicator so we have to wait for it.
-    expect(
-      await screen.findByRole("textbox", { name: /name/i })
-    ).toBeInTheDocument();
+    // 8.) Change findByRole to findByPlaceholderText because with this we can also check the text in the input field
+    expect(await screen.findByPlaceholderText(/name/i)).toBeInTheDocument();
+
+    // 11.) Check to see if we have the price input field. Change find to get because by the time we wait for the name input everything will be up, so we can just verify it at this point
+    expect(screen.getByPlaceholderText(/price/i)).toBeInTheDocument();
   });
 });
