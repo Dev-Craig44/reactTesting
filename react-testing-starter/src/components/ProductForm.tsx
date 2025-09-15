@@ -48,11 +48,7 @@ const ProductForm = ({ product, onSubmit }: Props) => {
       className="space-y-3"
     >
       <Box>
-        {/* → Error: Unable to find role="textbox" with name `/name/i` in test */}
-        {/* 9.) Remove this label*/}
-
         <TextField.Root className="max-w-sm">
-          {/* 10.) Remove the aria-label because we are going to look this element by placeholder */}
           <TextField.Input placeholder="Name" {...register("name")} size="3" />
         </TextField.Root>
         <ErrorMessage error={errors.name} />
