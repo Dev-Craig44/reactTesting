@@ -49,13 +49,12 @@ const ProductForm = ({ product, onSubmit }: Props) => {
     >
       <Box>
         {/* → Error: Unable to find role="textbox" with name `/name/i` in test */}
-        {/* 9.) Add a label with `htmlFor="name"` so the input can be selected by its accessible name */}
-        <label htmlFor="name">Name</label>
+        {/* 9.) Remove this label*/}
 
         <TextField.Root className="max-w-sm">
-          {/* 10.) Add `id="name"` to the input so it associates correctly with the label */}
+          {/* 10.) Remove this id attribute and add the aria label attribute and set it to [name] */}
           <TextField.Input
-            id="name"
+            aria-label="name"
             placeholder="Name"
             {...register("name")}
             size="3"
