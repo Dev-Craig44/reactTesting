@@ -548,6 +548,9 @@ When writing tests for forms and interactive components, focus on two main areas
   - Special characters
 - **Form submission** — Ensure that submitting the form sends the correct information.
 - **Form feedback & UX** — Test the user experience:
+
   - Submit button disables during submission
   - Loading spinner appears
   - Toast/notification message confirms success
+
+  ## Update
