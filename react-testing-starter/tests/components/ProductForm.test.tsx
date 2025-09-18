@@ -14,12 +14,33 @@ describe("ProductForm", () => {
     db.category.delete({ where: { id: { equals: category.id } } });
   });
 
+  // 1.) Move rendeting function outside of our function
+  // 5.) Give it our product variable and annotate it w/ type Product. Give the optional operator because we don't need it in the first test case.
+  const renderComponent = (product?: Product) => {
+    // 2.) Movw rendering logic up to this helper function
+    // 6.) Pass the product as a prop to our component.
+    render(<ProductForm product={product} onSubmit={vi.fn()} />, {
+      wrapper: AllProviders,
+    });
+
+    // 7.) Return an object
+    return {
+      // 8.) declare our waitForFormToLoad function
+      waitForFormToLoad: () => screen.findByRole("form"),
+      // 12.) Add the nameInput function
+      nameInput: screen.findByPlaceholderText(/name/i),
+    };
+  };
+
   it("should render form fields", async () => {
-    render(<ProductForm onSubmit={vi.fn()} />, { wrapper: AllProviders });
+    // 3.) Call the render function
+    // 9.) Destruct the component and grab our wait function
+    const { nameInput, waitForFormToLoad } = renderComponent();
 
-    await screen.findByRole("form");
-
-    expect(await screen.findByPlaceholderText(/name/i)).toBeInTheDocument();
+    // 10.) replace our logic with our helper function
+    await waitForFormToLoad();
+    // 13.) replace old logic with nameInput function
+    expect(nameInput).toBeInTheDocument();
 
     expect(screen.getByPlaceholderText(/price/i)).toBeInTheDocument();
 
@@ -35,11 +56,12 @@ describe("ProductForm", () => {
       price: 10,
       categoryId: category.id,
     };
-    render(<ProductForm product={product} onSubmit={vi.fn()} />, {
-      wrapper: AllProviders,
-    });
+    // 4.) Replace this with our render function and give it our [product].
+    // 11.) Grab hour helper function and replace it with it's old implementation
+    const { waitForFormToLoad } = renderComponent(product);
 
-    await screen.findByRole("form");
+    // 11.)
+    await waitForFormToLoad();
 
     expect(await screen.findByPlaceholderText(/name/i)).toHaveValue(
       product.name
