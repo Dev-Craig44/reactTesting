@@ -28,19 +28,21 @@ describe("ProductForm", () => {
       // 8.) declare our waitForFormToLoad function
       waitForFormToLoad: () => screen.findByRole("form"),
       // 12.) Add the nameInput function
-      nameInput: screen.findByPlaceholderText(/name/i),
+      // 14.) defer nameInput rendering
+      getNameInput: () => screen.getByPlaceholderText(/name/i),
     };
   };
 
   it("should render form fields", async () => {
     // 3.) Call the render function
     // 9.) Destruct the component and grab our wait function
-    const { nameInput, waitForFormToLoad } = renderComponent();
+    const { waitForFormToLoad, getNameInput } = renderComponent();
 
     // 10.) replace our logic with our helper function
     await waitForFormToLoad();
     // 13.) replace old logic with nameInput function
-    expect(nameInput).toBeInTheDocument();
+    // Because nameInput is render when the renderComponent is rendered we need to turn it into a function
+    expect(getNameInput()).toBeInTheDocument();
 
     expect(screen.getByPlaceholderText(/price/i)).toBeInTheDocument();
 
