@@ -20,8 +20,11 @@ describe("ProductForm", () => {
     });
 
     return {
-      waitForFormToLoad: () => screen.findByRole("form"),
-      getInputs: () => {
+      // 6.) Create code block, await the loading form function and add the getInput return to this function too
+      waitForFormToLoad: async () => {
+        await screen.findByRole("form");
+
+        // 7.) Move getInput implementation to this loading form function
         return {
           nameInput: screen.getByPlaceholderText(/name/i),
           priceInput: screen.getByPlaceholderText(/price/i),
@@ -32,10 +35,9 @@ describe("ProductForm", () => {
   };
 
   it("should render form fields", async () => {
-    const { waitForFormToLoad, getInputs } = renderComponent();
+    const { waitForFormToLoad } = renderComponent();
 
-    await waitForFormToLoad();
-    const { nameInput, priceInput, categoryInput } = getInputs();
+    const { nameInput, priceInput, categoryInput } = await waitForFormToLoad();
 
     expect(nameInput).toBeInTheDocument();
     expect(priceInput).toBeInTheDocument();
@@ -49,11 +51,9 @@ describe("ProductForm", () => {
       price: 10,
       categoryId: category.id,
     };
-    const { waitForFormToLoad, getInputs } = renderComponent(product);
+    const { waitForFormToLoad } = renderComponent(product);
 
-    await waitForFormToLoad();
-
-    const { nameInput, priceInput, categoryInput } = getInputs();
+    const { nameInput, priceInput, categoryInput } = await waitForFormToLoad();
 
     expect(nameInput).toHaveValue(product.name);
     expect(priceInput).toHaveValue(product.price.toString());
@@ -63,13 +63,11 @@ describe("ProductForm", () => {
   // 1.) write test case for the focus being on the name field
   it("should focus on the name field", async () => {
     // 2.) grab our props
-    const { waitForFormToLoad, getInputs } = renderComponent();
+    const { waitForFormToLoad } = renderComponent();
 
     // 3.) Call our form loader function
-    await waitForFormToLoad();
+    const { nameInput } = await waitForFormToLoad();
 
-    // 4.) grab out input function
-    const { nameInput } = getInputs();
     // 5.) Verify that this feild has focus
     expect(nameInput).toHaveFocus();
   });
