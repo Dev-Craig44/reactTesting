@@ -59,4 +59,18 @@ describe("ProductForm", () => {
     expect(priceInput).toHaveValue(product.price.toString());
     expect(categoryInput).toHaveTextContent(category.name);
   });
+
+  // 1.) write test case for the focus being on the name field
+  it("should focus on the name field", async () => {
+    // 2.) grab our props
+    const { waitForFormToLoad, getInputs } = renderComponent();
+
+    // 3.) Call our form loader function
+    await waitForFormToLoad();
+
+    // 4.) grab out input function
+    const { nameInput } = getInputs();
+    // 5.) Verify that this feild has focus
+    expect(nameInput).toHaveFocus();
+  });
 });
