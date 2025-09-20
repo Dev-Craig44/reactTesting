@@ -20,11 +20,9 @@ describe("ProductForm", () => {
     });
 
     return {
-      // 6.) Create code block, await the loading form function and add the getInput return to this function too
       waitForFormToLoad: async () => {
         await screen.findByRole("form");
 
-        // 7.) Move getInput implementation to this loading form function
         return {
           nameInput: screen.getByPlaceholderText(/name/i),
           priceInput: screen.getByPlaceholderText(/price/i),
@@ -60,15 +58,11 @@ describe("ProductForm", () => {
     expect(categoryInput).toHaveTextContent(category.name);
   });
 
-  // 1.) write test case for the focus being on the name field
   it("should focus on the name field", async () => {
-    // 2.) grab our props
     const { waitForFormToLoad } = renderComponent();
 
-    // 3.) Call our form loader function
     const { nameInput } = await waitForFormToLoad();
 
-    // 5.) Verify that this feild has focus
     expect(nameInput).toHaveFocus();
   });
 });

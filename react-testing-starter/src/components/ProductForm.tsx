@@ -50,7 +50,6 @@ const ProductForm = ({ product, onSubmit }: Props) => {
       <Box>
         <TextField.Root className="max-w-sm">
           <TextField.Input
-            // Make test pass by adding the sutofocus feature
             autoFocus
             placeholder="Name"
             {...register("name")}
