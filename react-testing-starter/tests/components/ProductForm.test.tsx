@@ -68,33 +68,19 @@ describe("ProductForm", () => {
     expect(nameInput).toHaveFocus();
   });
 
-  // 1.) Create test case for an error showing when the name isn't there
   it("should display an error if name is missing", async () => {
-    // 2.) Wait for our screen to load and grab our inputs
     const { waitForFormToLoad } = renderComponent();
-    // 3.) Don't destructure it, just declare a [form] object
     const form = await waitForFormToLoad();
 
-    // Fill out different form inputs
-
-    // 4.) Create a user
     const user = userEvent.setup();
-    // 5.) Make user fill up price input
     await user.type(form.priceInput, "10");
-    // 6.) Click the category option
     await user.click(form.categoryInput);
-    // 7.) Grab all our options
     const options = screen.getAllByRole("option");
-    //  8.) click the first option
     await user.click(options[0]);
-    // 9.) Click our submit button
     await user.click(form.submitButton);
 
-    // 10.) Grab our error
     const error = screen.getByRole("alert");
-    // 11. Verify that it's in the doc
     expect(error).toBeInTheDocument();
-    // 12.) Verify that it has the text content `required`
     expect(error).toHaveTextContent(/required/i);
   });
 });
