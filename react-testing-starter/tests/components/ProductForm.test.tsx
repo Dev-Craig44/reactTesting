@@ -68,17 +68,13 @@ describe("ProductForm", () => {
     expect(nameInput).toHaveFocus();
   });
 
-  // 1.) Use each method to parameterize our tests
   it.each([
-    // 2.) Create object for missing scenario
     { scenario: "missing", errorMessage: /required/i },
-    // 3.) Create object name longer than 255 characters
     {
       scenario: "longer than 255 characters",
       name: "a".repeat(256),
       errorMessage: /255 /,
     },
-    // 4.) Change test case situation to $scenario and destructure our props [name, errorMessage]
   ])(
     "should display an error if name is $scenario",
     async ({ name, errorMessage }) => {
@@ -86,7 +82,6 @@ describe("ProductForm", () => {
       const form = await waitForFormToLoad();
 
       const user = userEvent.setup();
-      // 5.) Set the name, but check if it's there before setting it
       if (name !== undefined) await user.type(form.nameInput, name);
       await user.type(form.priceInput, "10");
       await user.click(form.categoryInput);
@@ -96,7 +91,6 @@ describe("ProductForm", () => {
 
       const error = screen.getByRole("alert");
       expect(error).toBeInTheDocument();
-      // 6.) Switch error message to our [errorMessage] variable
       expect(error).toHaveTextContent(errorMessage);
     }
   );
