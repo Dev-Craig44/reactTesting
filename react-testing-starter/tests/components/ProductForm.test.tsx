@@ -51,7 +51,6 @@ describe("ProductForm", () => {
           price: 1,
           categoryId: 1,
         };
-        // 3.) Start commenting out parts of the code and checking the test:ui to see where we are getting the act warning.
         const fill = async (product: FormData) => {
           const user = userEvent.setup();
           if (product.name !== undefined)
@@ -60,7 +59,6 @@ describe("ProductForm", () => {
           if (product.price !== undefined)
             await user.type(priceInput, product.price.toString());
 
-          // 4.) Make sure the input that you're trying to type in is focused on to.
           await user.tab();
           await user.click(categoryInput);
           const options = screen.getAllByRole("option");
@@ -114,7 +112,6 @@ describe("ProductForm", () => {
     expect(nameInput).toHaveFocus();
   });
 
-  // 2.) Take [only] from the previous test case and place it her and
   it.only.each([
     { scenario: "missing", errorMessage: /required/i },
     {
@@ -134,7 +131,6 @@ describe("ProductForm", () => {
     }
   );
 
-  // 1.) Access the [only] property so we can focus in on these test only to find out where the act warning is coming from
   it.each([
     { scenario: "missing", errorMessage: /required/i },
     {
