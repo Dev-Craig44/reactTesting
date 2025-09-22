@@ -582,3 +582,11 @@ When writing tests for forms and interactive components, focus on two main areas
     // assertions...
   });
   ```
+
+  ### Why `user.tab()` before typing?
+
+  In tests, `user.type()` expects the element to already be focused.  
+  If it isn’t, React triggers focus updates outside its normal render cycle, which causes an `act(...)` warning.
+
+By calling `user.tab()` before typing, we simulate a real user moving focus into the field first.  
+This removes the warning and makes the test flow closer to real keyboard navigation.
