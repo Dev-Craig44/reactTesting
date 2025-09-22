@@ -553,4 +553,32 @@ When writing tests for forms and interactive components, focus on two main areas
   - Loading spinner appears
   - Toast/notification message confirms success
 
-  ## Update
+  ## Extracting a function for filling forms
+
+  When writing tests for forms, it's common to have repeated code for filling out input fields. To keep your tests clean and DRY, extract a helper function that fills the form fields with test data. This makes your tests easier to read and maintain.
+
+  **Example:**
+
+  ```ts
+  // utils/testHelpers.ts
+  export function fillForm({ name, email }, screen, user) {
+    user.type(screen.getByLabelText(/name/i), name);
+    user.type(screen.getByLabelText(/email/i), email);
+  }
+  ```
+
+  You can then use this helper in your test files:
+
+  ```ts
+  import { fillForm } from "./utils/testHelpers";
+
+  test("submits the form", async () => {
+    render(<MyForm />);
+    const user = userEvent.setup();
+
+    fillForm({ name: "Alice", email: "alice@example.com" }, screen, user);
+
+    await user.click(screen.getByRole("button", { name: /submit/i }));
+    // assertions...
+  });
+  ```
