@@ -24,9 +24,7 @@ describe("ProductForm", () => {
     });
 
     return {
-      // 17.) Create our error helper function
       expectErrorToBeInTheDocument: (errorMessage: RegExp) => {
-        // 18.) Paste the logic inside the body of the function
         const error = screen.getByRole("alert");
         expect(error).toBeInTheDocument();
         expect(error).toHaveTextContent(errorMessage);
@@ -35,7 +33,6 @@ describe("ProductForm", () => {
       waitForFormToLoad: async () => {
         await screen.findByRole("form");
 
-        // 5.) Move input logic outside of the returned object so we can use it for our fill method
         const nameInput = screen.getByPlaceholderText(/name/i);
         const priceInput = screen.getByPlaceholderText(/price/i);
         const categoryInput = screen.getByRole("combobox", {
@@ -43,14 +40,11 @@ describe("ProductForm", () => {
         });
         const submitButton = screen.getByRole("button");
 
-        // 10.) Annoted different type for our Product so it can cover more than
         type FormData = {
-          // 11.) iterate over all the keys of the product. typescript doens't likethe any type, but it's ok in this situation. Just disable the rule for this line.
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           [K in keyof Product]: any;
         };
 
-        // 13.) Create a object that contains all the data for the form
         const validData: FormData = {
           id: 1,
           name: "a",
@@ -58,17 +52,9 @@ describe("ProductForm", () => {
           categoryId: 1,
         };
 
-        // 6.) Define our fill method outside outside our object
-        // 4.) Make this function async
-        // 12.) Change the product type to the one wwe just created
         const fill = async (product: FormData) => {
-          // 3.) Paste the implementation we just copied
           const user = userEvent.setup();
-          // 7.) Remove the [form] variable name from our input methods/props
-
-          // 8.) Set name to product.name & price
           if (product.name !== undefined)
-            // 16.) Disable all of these linting issues because we know what we're doing
             await user.type(nameInput, product.name);
 
           if (product.price !== undefined)
@@ -85,9 +71,7 @@ describe("ProductForm", () => {
           priceInput,
           categoryInput,
           submitButton,
-          // 2.) Create a helper function for filling out our form
           fill,
-          // 14.) Add our validData Object to our returned object
           validData,
         };
       },
@@ -138,17 +122,11 @@ describe("ProductForm", () => {
   ])(
     "should display an error if name is $scenario",
     async ({ name, errorMessage }) => {
-      // 21.) Grab our error verification function
       const { waitForFormToLoad, expectErrorToBeInTheDocument } =
         renderComponent();
       const form = await waitForFormToLoad();
-      // 15.) Call our form fill function, spread our validData object, add the name, and await it
       await form.fill({ ...form.validData, name });
 
-      // 1.) Copy all this logic for filling out a form
-      // 16.) Delete All of this logic
-
-      // 22.) Call our error verification function and pass it the error message
       expectErrorToBeInTheDocument(errorMessage);
     }
   );
@@ -178,15 +156,11 @@ describe("ProductForm", () => {
   ])(
     "should display an error if price is $scenario",
     async ({ price, errorMessage }) => {
-      // 19.) Grab our error function
       const { waitForFormToLoad, expectErrorToBeInTheDocument } =
         renderComponent();
       const form = await waitForFormToLoad();
-      // 9.) Add our form fill helper
-      // 15.) Spread our validData object and overwrite what we want to specifically test
       await form.fill({ ...form.validData, price });
 
-      // 20.) Call our error function and pass it the [errorMessage]
       expectErrorToBeInTheDocument(errorMessage);
     }
   );
