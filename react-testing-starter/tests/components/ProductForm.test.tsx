@@ -217,7 +217,7 @@ describe("ProductForm", () => {
     expect(form.submitButton).not.toBeDisabled();
   });
 
-  it("should re-enable the submit button after submission", async () => {
+  it("should re-enable the submit button after form submission fails", async () => {
     const { waitForFormToLoad, onSubmit } = renderComponent();
     onSubmit.mockRejectedValue("error ");
 
@@ -225,5 +225,17 @@ describe("ProductForm", () => {
     await form.fill(form.validData);
 
     expect(form.submitButton).not.toBeDisabled();
+  });
+
+  // 1.) Write failing test for whitespaces
+  it("should display an error is name only displays whitespaces", async () => {
+    const { waitForFormToLoad, expectErrorToBeInTheDocument } =
+      renderComponent();
+    const form = await waitForFormToLoad();
+
+    // 2.) enter validData but overwrite name w/ whitespaces
+    await form.fill({ ...form.validData, name: "   " });
+
+    expectErrorToBeInTheDocument(/required/i);
   });
 });
