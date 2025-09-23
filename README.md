@@ -590,3 +590,23 @@ When writing tests for forms and interactive components, focus on two main areas
 
 By calling `user.tab()` before typing, we simulate a real user moving focus into the field first.  
 This removes the warning and makes the test flow closer to real keyboard navigation.
+
+## 📝 Testing Forms
+
+Unit testing forms is essential for ensuring your application's reliability. Automated tests are much faster and more thorough than manual testing, especially when dealing with complex validation rules.
+
+### What to Test
+
+When testing forms, focus on these key aspects:
+
+- **Rendering**: Ensure all input fields are present and correctly labeled.
+- **Validation Rules**: Verify that validation logic works for all edge cases.
+- **Form Submission**: Check that submitting the form sends the correct data.
+- **Feedback**: Confirm that the user receives appropriate feedback after submission (e.g., success messages, error notifications).
+
+### Tips for Effective Form Testing
+
+- **Use Parameterized Tests**: Simplify validation tests by running the same test logic with different input values.
+- **Extract Utility Functions**: Create reusable helper functions for filling out forms. This keeps your tests clean, DRY, and easy to maintain.
+
+---
