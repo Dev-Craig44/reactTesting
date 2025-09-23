@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { Toaster } from "react-hot-toast";
 import ProductForm from "../../src/components/ProductForm";
 import { Category, Product } from "../../src/entities";
 import AllProviders from "../AllProviders";
@@ -19,11 +20,24 @@ describe("ProductForm", () => {
   });
 
   const renderComponent = (product?: Product) => {
-    render(<ProductForm product={product} onSubmit={vi.fn()} />, {
-      wrapper: AllProviders,
-    });
+    // 4.) To make our assertion for onSubmit function we need to make the mock function  a constant that's accessible later
+    const onSubmit = vi.fn();
+
+    // 5.) Add [onSubmit] to our prop
+    render(
+      <>
+        <ProductForm product={product} onSubmit={onSubmit} />
+        {/* 16.) Add Toaster component in the DOM so our `unexpected error` message can pop up  */}
+        <Toaster />
+      </>,
+      {
+        wrapper: AllProviders,
+      }
+    );
 
     return {
+      // 6.) Add [onSubmit] to our returned object
+      onSubmit,
       expectErrorToBeInTheDocument: (errorMessage: RegExp) => {
         const error = screen.getByRole("alert");
         expect(error).toBeInTheDocument();
@@ -49,8 +63,10 @@ describe("ProductForm", () => {
           id: 1,
           name: "a",
           price: 1,
-          categoryId: 1,
+          // 9.) Match our [categoryId] with the id from our category
+          categoryId: category.id,
         };
+
         const fill = async (product: FormData) => {
           const user = userEvent.setup();
           if (product.name !== undefined)
@@ -112,7 +128,7 @@ describe("ProductForm", () => {
     expect(nameInput).toHaveFocus();
   });
 
-  it.only.each([
+  it.each([
     { scenario: "missing", errorMessage: /required/i },
     {
       scenario: "longer than 255 characters",
@@ -164,4 +180,41 @@ describe("ProductForm", () => {
       expectErrorToBeInTheDocument(errorMessage);
     }
   );
+
+  // 1.) Write test case for onSubmit being called with the correct data.
+  it("should call onSubmit with the correct data", async () => {
+    // 2.) Copy and paste the implementation from our previous test for rendering our component and filling out our form minus the [expect] function
+    // 7.) Grab [onSubmit] from the result
+    const { waitForFormToLoad, onSubmit } = renderComponent();
+    const form = await waitForFormToLoad();
+    // 3.) Just pass validData to our function
+    await form.fill(form.validData);
+
+    // 10.) Spread our validData, exclude the id, and verify the data w/o it
+    // 11.) Disable linting for id, because we are not using it
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unused-vars
+    const { id, ...formData } = form.validData;
+    // 8.) Verify the onSubmit is called w/ the [validData]
+    expect(onSubmit).toHaveBeenCalledWith(formData);
+  });
+
+  // 12.) Make test case for if submission fails
+  it("should display a toast if submission fails ", async () => {
+    // 13.) Copy and paste lines from our previous test
+    const { waitForFormToLoad, onSubmit } = renderComponent();
+    // 14.) Program our mock to simulate a failure. The value doesn't matter because we just want it to return a rejected promise.
+    onSubmit.mockRejectedValue({});
+    const form = await waitForFormToLoad();
+    await form.fill(form.validData);
+
+    // 15.) Call screen.debug because we don't know how our toast is going to get rendered
+    // screen.debug();
+
+    // 17.) Because we see that the toast is render in a role called [status], let's findbyrole and store it in a [toast] variable
+    const toast = await screen.findByRole("status");
+
+    // 18.) Verify that the toast is in the doc, and has the unexpected error text
+    expect(toast).toBeInTheDocument();
+    expect(toast).toHaveTextContent(/error/i);
+  });
 });
