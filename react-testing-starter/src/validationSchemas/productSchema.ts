@@ -2,7 +2,8 @@ import * as z from "zod";
 
 export const productFormSchema = z.object({
   id: z.number().optional(),
-  name: z.string().min(1, "Name is required").max(255),
+  // 3.) Add trim() to the name schema so that whitespace will trigger the min length validation
+  name: z.string().trim().min(1, "Name is required").max(255),
   price: z.coerce
     .number({
       required_error: "Price is required",
