@@ -196,4 +196,44 @@ describe("ProductForm", () => {
     expect(toast).toBeInTheDocument();
     expect(toast).toHaveTextContent(/error/i);
   });
+
+  // 1.) Create test case for the disable button feedback
+  it("should disable the button upon submission", async () => {
+    // 2.) Borrow the code to render our form and fill it out from the previous test case
+    const { waitForFormToLoad, onSubmit } = renderComponent();
+    // 3.) Test the middle state of the button which would be an unresolved promise
+    onSubmit.mockReturnValue(new Promise(() => {}));
+
+    const form = await waitForFormToLoad();
+    await form.fill(form.validData);
+
+    // 4.) Verify submit button is disabled
+    expect(form.submitButton).toBeDisabled();
+  });
+
+  // 5.) Duplicate last test for test case of button being re-enabled
+  it("should re-enable the submit button after submission", async () => {
+    const { waitForFormToLoad, onSubmit } = renderComponent();
+    // 6.) Program our mock to resolve the promis
+    onSubmit.mockResolvedValue({});
+
+    const form = await waitForFormToLoad();
+    await form.fill(form.validData);
+
+    // 7.) Verify the our submitButton is NOT disabled
+    expect(form.submitButton).not.toBeDisabled();
+  });
+
+  // 8.) Duplicate last test case for button being re-enabled if form submission fails
+  it("should re-enable the submit button after submission", async () => {
+    const { waitForFormToLoad, onSubmit } = renderComponent();
+    // 6.) Program our mock to be rejected w/ a value of `error`
+    onSubmit.mockRejectedValue("error ");
+
+    const form = await waitForFormToLoad();
+    await form.fill(form.validData);
+
+    // 7.) Verify the our submitButton is NOT disabled
+    expect(form.submitButton).not.toBeDisabled();
+  });
 });
