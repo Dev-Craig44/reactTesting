@@ -48,7 +48,7 @@ describe("ProductForm", () => {
         const categoryInput = screen.getByRole("combobox", {
           name: /category/i,
         });
-        const submitButton = screen.getByRole("button");
+        const submitButton = screen.getByRole("button", { name: /submit/i });
 
         type FormData = {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -271,9 +271,11 @@ describe("ProductForm", () => {
     const resetButton = screen.getByRole("button", { name: /reset/i });
     await userEvent.click(resetButton);
 
-    // 7.) Verify the feilds are clear
+    // 7.) Verify the fields are clear
     expect(form.nameInput).toHaveValue("");
-    expect(form.priceInput).toHaveValue(null);
-    expect(form.categoryInput).toHaveTextContent(/cagtegory/i);
+    expect(form.priceInput).toHaveValue("");
+    expect(form.categoryInput).toHaveTextContent(
+      new RegExp(category.name, "i")
+    );
   });
 });

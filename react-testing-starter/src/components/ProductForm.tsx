@@ -25,6 +25,8 @@ const ProductForm = ({ product, onSubmit }: Props) => {
     handleSubmit,
     control,
     formState: { errors },
+    // 8.) Add reset to the useForm component
+    reset,
   } = useForm<ProductFormData>({
     defaultValues: product,
     resolver: zodResolver(productFormSchema),
@@ -100,6 +102,17 @@ const ProductForm = ({ product, onSubmit }: Props) => {
       </Box>
       <Button size="3" disabled={isSubmitting}>
         Submit
+      </Button>
+      {/* 9.) Create reset button */}
+      <Button
+        type="button"
+        size={"3"}
+        variant="soft"
+        onClick={() => {
+          product ? reset(product) : reset();
+        }}
+      >
+        Reset
       </Button>
     </form>
   );
