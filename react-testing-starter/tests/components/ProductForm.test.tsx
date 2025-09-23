@@ -238,4 +238,16 @@ describe("ProductForm", () => {
 
     expectErrorToBeInTheDocument(/required/i);
   });
+
+  // 4.) Create test case for when no category is selected
+  it("should display and error when category is not selected", async () => {
+    const { waitForFormToLoad } = renderComponent();
+    const form = await waitForFormToLoad();
+
+    // 5.) Hit submit button without selecting anything
+    await userEvent.click(form.submitButton);
+    expect(
+      await screen.findByText(/category is required/i)
+    ).toBeInTheDocument();
+  });
 });
