@@ -246,4 +246,34 @@ describe("ProductForm", () => {
       await screen.findByText(/category is required/i)
     ).toBeInTheDocument();
   });
+
+  // 1.) Write failing test for reset button implementation
+  it("should reset the form when reset button is clicked", async () => {
+    // 2.) Load form
+    const { waitForFormToLoad } = renderComponent();
+    const form = await waitForFormToLoad();
+
+    // 3.) Fill out form
+    await userEvent.type(form.nameInput, "Craig");
+    await userEvent.type(form.priceInput, "10");
+
+    // 4.) Pick category
+    await userEvent.click(form.categoryInput);
+    const options = screen.getAllByRole("option");
+    await userEvent.click(options[0]);
+
+    // 5.) Verify data is correct
+    expect(form.nameInput).toHaveValue("Craig");
+    expect(form.priceInput).toHaveValue("10");
+    expect(form.categoryInput).toHaveTextContent(/.+/);
+
+    // 6.) click the reset button
+    const resetButton = screen.getByRole("button", { name: /reset/i });
+    await userEvent.click(resetButton);
+
+    // 7.) Verify the feilds are clear
+    expect(form.nameInput).toHaveValue("");
+    expect(form.priceInput).toHaveValue(null);
+    expect(form.categoryInput).toHaveTextContent(/cagtegory/i);
+  });
 });
